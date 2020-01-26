@@ -1,19 +1,16 @@
 package com.example.projectaudio.ui.music
 
 import android.Manifest
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.database.Cursor
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore
 import android.provider.Settings
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -22,11 +19,10 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.projectaudio.AdapterListMusic
-import com.example.projectaudio.AudioModel
+import com.example.projectaudio.adapter.AdapterListMusic
+import com.example.projectaudio.helper.Helper
 import com.example.projectaudio.R
 import kotlinx.android.synthetic.main.fragment_music.view.*
-
 
 class MusicFragment : Fragment() {
 
@@ -43,13 +39,18 @@ class MusicFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_music, container, false)
 
         root.listMusic.layoutManager = LinearLayoutManager(context)
+
         return root
     }
 
     override fun onResume() {
         if (Build.VERSION.SDK_INT >= 23) {
             if (checkPermission())
-                view!!.listMusic.adapter = AdapterListMusic(context!!, getAllAudioFromDevice(context!!))
+                view!!.listMusic.adapter =
+                    AdapterListMusic(
+                        context!!,
+                        Helper().getAllAudioFromDevice(context!!)
+                    )
             else
                 requestPermission()
         }
@@ -87,7 +88,11 @@ class MusicFragment : Fragment() {
         when (requestCode) {
             PERMISSION_REQUEST_CODE -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                    view!!.listMusic.adapter = AdapterListMusic(context!!,getAllAudioFromDevice(context!!))
+                    view!!.listMusic.adapter =
+                        AdapterListMusic(
+                            context!!,
+                            Helper().getAllAudioFromDevice(context!!)
+                        )
                 else
                     showDialogPermission()
             }
@@ -111,36 +116,5 @@ class MusicFragment : Fragment() {
         dialog.show()
     }
 
-    private fun getAllAudioFromDevice(context: Context): ArrayList<AudioModel> {
-        val tempAudioList: ArrayList<AudioModel> = ArrayList()
-        val uri: Uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
-        val projection = arrayOf(
-            MediaStore.Audio.AudioColumns.DATA,
-            MediaStore.Audio.AudioColumns.ALBUM,
-            MediaStore.Audio.ArtistColumns.ARTIST
-        )
-        val c : Cursor = context.contentResolver.query(
-            uri,
-            projection,
-            null,
-            null,
-            null
-        )!!
-        while (c.moveToNext()) {
-            val audioModel = AudioModel()
-            val path: String = c.getString(0)
-            val album: String = c.getString(1)
-            val artist: String = c.getString(2)
-            val name = path.substring(path.lastIndexOf("/") + 1)
-            audioModel.setaName(name)
-            audioModel.setaAlbum(album)
-            audioModel.setaArtist(artist)
-            audioModel.setaPath(path)
-            Log.e("Name :$name", " Album :$album")
-            Log.e("Path :$path", " Artist :$artist")
-            tempAudioList.add(audioModel)
-        }
-        c.close()
-        return tempAudioList
-    }
+
 }

@@ -1,4 +1,4 @@
-package com.example.projectaudio
+package com.example.projectaudio.helper
 
 class AudioModel {
     private var aPath: String? = null
