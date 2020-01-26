@@ -1,17 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/bottom_sound"
-    android:elevation="10dp"
     android:background="@color/colorBackground"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:behavior_hideable="false"
     app:behavior_peekHeight="60dp"
-    android:padding="5dp"
+    android:paddingStart="5dp"
+    android:paddingEnd="5dp"
+    android:paddingTop="2dp"
+    android:paddingBottom="2dp"
     app:layout_behavior="@string/bottom_sheet_behavior">
 
-    
+    <ImageView
+        android:id="@+id/imgPlay"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_alignTop="@id/txtNameMusic"
+        android:layout_alignBottom="@id/txtAuthorMusic"
+        android:src="@drawable/ic_play"
+        android:tint="@color/colorPrimary" />
+
+    <TextView
+        android:id="@+id/txtNameMusic"
+        android:ellipsize="end"
+        android:layout_toEndOf="@+id/imgPlay"
+        android:layout_toStartOf="@id/imgNext"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:textSize="14sp"
+        android:text="Tuesday" />
+    <TextView
+        android:id="@+id/txtAuthorMusic"
+        android:ellipsize="end"
+        android:layout_toEndOf="@+id/imgPlay"
+        android:layout_toStartOf="@id/imgNext"
+        android:gravity="center"
+        android:layout_below="@id/txtNameMusic"
+        android:text="Tuesday"
+        android:textSize="12sp"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/colorGray"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <ImageView
+        android:id="@+id/imgNext"
+        android:src="@drawable/ic_fast_forward"
+        android:layout_alignParentEnd="true"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_alignTop="@id/txtNameMusic"
+        android:layout_alignBottom="@id/txtAuthorMusic"
+        android:tint="@color/colorPrimary"/>
 
 </RelativeLayout>

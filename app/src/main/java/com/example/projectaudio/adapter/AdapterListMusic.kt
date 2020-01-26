@@ -19,6 +19,11 @@ class AdapterListMusic(
     private val array : ArrayList<AudioModel>) :
     RecyclerView.Adapter<AdapterListMusic.ViewHolder>() {
 
+    private var places: InterfaceSound
+
+    init {
+        places = context as InterfaceSound
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -38,7 +43,8 @@ class AdapterListMusic(
         holder.txtAuthor.text = array[position].getaArtist()
         holder.txtName.text = array[position].getaName()
         holder.linear.setOnClickListener {
-            holder.img.visibility = View.VISIBLE
+            //holder.img.visibility = View.VISIBLE
+            places.onClickItem(position)
         }
     }
 
@@ -47,5 +53,9 @@ class AdapterListMusic(
         val txtAuthor : TextView = view.txtAuthor
         val linear : RelativeLayout = view.linear
         val img : ImageView = view.imgMusic
+    }
+
+    internal interface InterfaceSound {
+        fun onClickItem(num : Int)
     }
 }

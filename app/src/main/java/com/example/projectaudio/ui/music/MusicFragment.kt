@@ -10,6 +10,7 @@ import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -22,6 +23,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.projectaudio.adapter.AdapterListMusic
 import com.example.projectaudio.helper.Helper
 import com.example.projectaudio.R
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import kotlinx.android.synthetic.main.bottom_sheet_sound.view.*
 import kotlinx.android.synthetic.main.fragment_music.view.*
 
 class MusicFragment : Fragment() {
